@@ -1,6 +1,15 @@
 import styled from 'styled-components';
+import { auth, provider } from '../firebase';
 
-const Header=()=>{
+const Header=(props)=>{
+  const handleAuth=()=>{
+      auth.signInWithPopUp(provider).then((result)=>{
+          console.log(result);
+      })
+      .catch((error)=>{
+          alert(error.message);
+      });
+  };
   return(
       <Navbar><LogoOne><img src="/images/logo.svg" alt="broken"></img></LogoOne>
       <NavMenu>
@@ -28,7 +37,7 @@ const Header=()=>{
               <img src="images/series-icon.svg" alt="broken"></img>
               <span>SERIES</span>
           </a>
-          <LoginButton>Login</LoginButton>
+          <LoginButton onClick={handleAuth}>Login</LoginButton>
       </NavMenu>
       </Navbar>
   );
@@ -113,14 +122,16 @@ min-width: 50%;
        }
     }
 `
-const LoginButton=styled.div`
+const LoginButton=styled.a`
 color: #f9f9f9; 
+cursor: pointer;    
 //border: 2px solid green;
 font-weight: 600;
 text-transform: uppercase;
 transition: all 1ms ease-out 0s;
 position: relative;
 left: 40px;
+top: 30px;
 height: 40px;
 padding-top: 10px;
 padding-left: 10px;
